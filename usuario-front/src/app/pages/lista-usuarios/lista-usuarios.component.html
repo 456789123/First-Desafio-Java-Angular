@@ -1,0 +1,29 @@
+<div class="jumbotron">
+  <h2>Lista de usuários</h2><br><br>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>email</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let usuario of listaUsuarios">
+      <td>{{usuario.nome}}</td>
+      <td>{{usuario.email}}</td>
+      <td><button class="btn btn-primary"(click)="alterarUsuario( usuario )">Editar</button></td>
+      <td><button class="btn btn-danger" (click)="deletarUsuario(usuario)">Excluir</button></td>
+    </tr>
+    </tbody>
+  </table>
+  <hr/>
+  <div [formGroup]="formUsuario">
+    <input formControlName="nomeForm" class="form-control" type="text" name="nome"  placeholder="Nome"  (ngModelChange)="verificarFormulario()"/>
+    <input formControlName="emailForm" class="form-control" type="text" name="email" placeholder="Email" (ngModelChange)="verificarFormulario()" [inputMask]="emailInputMask"/>
+    <input formControlName="senhaForm" class="form-control" type="password" name="senha" placeholder="Senha" (ngModelChange)="verificarFormulario()"/>
+  </div>
+
+  <button class="btn btn-success btn-block" (click)="adicionarUsuario( )" [disabled]="desabilitarBotaoIncluir">{{labelBotaoSalvarAlterar}}</button>
+</div>
