@@ -33,15 +33,6 @@ public class UsuarioRest {
         return ResponseEntity.ok(service.buscarUsuario(codigoUsuario));
     }
 
-    @PostMapping(value = "/salvar", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UsuarioDTO> salvarUsuario(@RequestBody UsuarioDTO usuario ) {
-        return ResponseEntity.ok(service.salvarUsuario(usuario));
-    }
-
-    @PostMapping(value = "/deletar", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Long> deletarUsuario(@RequestBody UsuarioDTO usuario ) {
-        service.deletarUsuario(usuario);
-        return new ResponseEntity<>(usuario.getCodigo(), HttpStatus.OK);
-    }
-
 }
+
+

@@ -64,7 +64,7 @@ export class ListaUsuariosComponent implements OnInit {
       usuario = {
         codigo: this.codigoUsuario,
         nome: this.formUsuario.value.nomeForm,
-        email: this.formUsuario.value.emailForm,
+        login: this.formUsuario.value.emailForm,
         senha: this.formUsuario.value.senhaForm,
       };
 
@@ -88,7 +88,7 @@ export class ListaUsuariosComponent implements OnInit {
       usuario = {
         codigo: undefined,
         nome: this.formUsuario.value.nomeForm,
-        email: this.formUsuario.value.emailForm,
+        login: this.formUsuario.value.emailForm,
         senha: this.formUsuario.value.senhaForm,
       };
 
@@ -125,7 +125,7 @@ export class ListaUsuariosComponent implements OnInit {
 
     this.codigoUsuario = usuario.codigo;
     this.formUsuario.get('nomeForm')?.setValue(usuario.nome);
-    this.formUsuario.get('emailForm')?.setValue(usuario.email);
+    this.formUsuario.get('emailForm')?.setValue(usuario.login);
     this.formUsuario.get('senhaForm')?.setValue(usuario.senha);
 
 

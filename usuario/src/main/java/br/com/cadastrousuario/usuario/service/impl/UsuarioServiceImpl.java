@@ -6,6 +6,7 @@ import br.com.cadastrousuario.usuario.model.Usuario;
 import br.com.cadastrousuario.usuario.repositorio.UsuarioRepositorio;
 import br.com.cadastrousuario.usuario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +32,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO salvarUsuario(UsuarioDTO usuarioDto) {
-        Usuario usuario = modelMapper.dtoParaEntidade(usuarioDto);
-        return modelMapper.entidadeParaDto(repositorio.save(usuario));
+
+        if( repositorio.findByLogin(usuarioDto.getLogin()) != null ) {
+            return new UsuarioDTO();
+        }
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioDto.getSenha());
+        usuarioDto.setSenha(encryptedPassword);
+
+        return modelMapper.entidadeParaDto(repositorio.save(modelMapper.dtoParaEntidade(usuarioDto)));
     }
 
     @Override
