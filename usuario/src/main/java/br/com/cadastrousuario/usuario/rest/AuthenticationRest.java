@@ -37,23 +37,4 @@ public class AuthenticationRest {
 
         return ResponseEntity.ok(new LoginResponseTDO(token));
     }
-
-    @PostMapping(value = "/salvar", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity salvarUsuario(@RequestBody UsuarioDTO usuario ) {
-
-        UsuarioDTO dto = service.salvarUsuario(usuario);
-
-        if( dto.getLogin() == null ) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(dto);
-    }
-
-    @PostMapping(value = "/deletar", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity deletarUsuario(@RequestBody UsuarioDTO usuario ) {
-        service.deletarUsuario(usuario);
-        return ResponseEntity.ok(usuario.getCodigo());
-    }
-
 }

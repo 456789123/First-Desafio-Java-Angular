@@ -22,20 +22,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioDTO> listarUsuarios() {
-        return modelMapper.listaEntidadeparaListaDTO(repositorio.findAll());
+        List<Usuario> lista = repositorio.findAll();
+        lista.forEach( usuario -> usuario.setSenha(""));
+        return modelMapper.listaEntidadeparaListaDTO(lista);
     }
 
     @Override
     public UsuarioDTO buscarUsuario(long codigoUsuario) {
-        return modelMapper.entidadeParaDto(repositorio.buscarUsuario(codigoUsuario));
+        Usuario usuario = repositorio.buscarUsuario(codigoUsuario);
+        usuario.setSenha("");
+        return modelMapper.entidadeParaDto(usuario);
     }
 
     @Override
     public UsuarioDTO salvarUsuario(UsuarioDTO usuarioDto) {
-
-        if( repositorio.findByLogin(usuarioDto.getLogin()) != null ) {
-            return new UsuarioDTO();
-        }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioDto.getSenha());
         usuarioDto.setSenha(encryptedPassword);
