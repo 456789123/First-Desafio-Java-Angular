@@ -25,9 +25,6 @@ public class AuthenticationRest {
     @Autowired
     private TokenComponent tokenComponent;
 
-    @Autowired
-    private UsuarioService service;
-
 
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity login(@RequestBody UsuarioDTO user ) {
