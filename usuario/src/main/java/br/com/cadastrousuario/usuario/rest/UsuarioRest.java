@@ -35,14 +35,14 @@ public class UsuarioRest {
         return ResponseEntity.ok(service.buscarUsuario(codigoUsuario));
     }
 
-    @PreAuthorize("hasRole(UserRole.ADMIN.getRole())")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/salvar", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UsuarioDTO> salvarUsuario(@RequestBody UsuarioDTO usuario ) {
         UsuarioDTO dto = service.salvarUsuario(usuario);
         return ResponseEntity.ok(dto);
     }
 
-    @PreAuthorize("hasRole(UserRole.ADMIN.getRole())")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/deletar", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Long> deletarUsuario(@RequestBody UsuarioDTO usuario ) {
         service.deletarUsuario(usuario);

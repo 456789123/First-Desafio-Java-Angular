@@ -31,8 +31,8 @@ public class ConfigSecurityConfgurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/usuario").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuario/salvar").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/usuario/deletar").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.POST, "/usuario/salvar").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.POST, "/usuario/deletar").hasRole("ADMIN")
 //                        .requestMatchers(HttpMethod.GET, "/usuario/*").hasRole("USER")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

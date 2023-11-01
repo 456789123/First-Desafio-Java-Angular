@@ -1,6 +1,7 @@
 package br.com.cadastrousuario.usuario.service.impl;
 
 import br.com.cadastrousuario.usuario.dtos.UsuarioDTO;
+import br.com.cadastrousuario.usuario.enuns.UserRole;
 import br.com.cadastrousuario.usuario.mapper.UsuarioMapper;
 import br.com.cadastrousuario.usuario.model.Usuario;
 import br.com.cadastrousuario.usuario.repositorio.UsuarioRepositorio;
@@ -36,6 +37,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO salvarUsuario(UsuarioDTO usuarioDto) {
+
+        if(null == usuarioDto.getRole()) {
+            usuarioDto.setRole(UserRole.USER.getRole());
+        }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioDto.getSenha());
         usuarioDto.setSenha(encryptedPassword);
