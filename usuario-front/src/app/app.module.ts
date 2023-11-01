@@ -4,11 +4,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ListaUsuariosComponent} from './pages/lista-usuarios/lista-usuarios.component';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {provideToastr, ToastrModule} from "ngx-toastr";
 import {NoopAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
 import {InputMaskModule} from "@ngneat/input-mask";
+import {JwtInterceptor} from "./auth/jwt.interceptor";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,11 @@ import {InputMaskModule} from "@ngneat/input-mask";
     HttpClient,
     provideAnimations(),
     provideToastr(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
