@@ -33,6 +33,11 @@
 </div>
 
 
-<div class="overlay" *ngIf="false">
-  <h1>MOLEQUE DOIDO!!!</h1>
+<div class="overlay" *ngIf="showModalConfirmacao">
+  <app-confirmation-dialog
+    [messageTitulo]="messageTitulo"
+    [acaoExecutar]="acaoExecutar"
+    (showModalConfirmacao)="calcel($event)"
+    (executarAcao)="acaoNecessaria($event)">
+  </app-confirmation-dialog>
 </div>

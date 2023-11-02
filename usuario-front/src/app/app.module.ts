@@ -12,12 +12,14 @@ import {InputMaskModule} from "@ngneat/input-mask";
 import {JwtInterceptor} from "./auth/jwt.interceptor";
 import { LoginComponent } from './pages/login/login.component';
 import {ConfirmPopupModule} from "primeng/confirmpopup";
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaUsuariosComponent,
-    LoginComponent
+    LoginComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,

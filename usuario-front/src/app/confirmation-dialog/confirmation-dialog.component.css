@@ -1,0 +1,38 @@
+.confirmation-dialog {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.confirmation-message {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.confirmation-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.confirmation-buttons button.cancel-button {
+  background-color: #ff0000;
+}
+
+.confirmation-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.confirmation-buttons button.cancel-button:hover {
+  background-color: #9d0000;
+}

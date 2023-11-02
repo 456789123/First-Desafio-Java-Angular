@@ -26,6 +26,11 @@ export class ListaUsuariosComponent implements OnInit {
 
   roleUsuario: string | undefined = '';
 
+  showModalConfirmacao: boolean = false;
+  messageTitulo: string = '';
+  acaoExecutar: string = '';
+  selectUsuario: Usuario = new Usuario();
+
   constructor(
     private service: UsuarioService,
     private cdRef: ChangeDetectorRef,
@@ -64,38 +69,16 @@ export class ListaUsuariosComponent implements OnInit {
 
   adicionarUsuario( ) {
 
-    let usuario = new Usuario();
 
     if( this.alteraUsuario ) {
 
-      this.alteraUsuario = false;
+      this.acaoExecutar = 'ALTERAR';
+      this.messageTitulo = `Deseja realmente alterar o usuário ${this.formUsuario.value.nomeForm}?`;
+      this.showModalConfirmacao = true;
 
-      usuario = {
-        codigo: this.codigoUsuario,
-        nome: this.formUsuario.value.nomeForm,
-        login: this.formUsuario.value.emailForm,
-        senha: this.formUsuario.value.senhaForm,
-        role: this.roleUsuario
-      };
 
-      this.service.salvarUsuario(usuario).subscribe( usuario => {
-        this.service.listarUsuarios().subscribe( lista => {
-          this.listaUsuarios = lista;
-          this.toastr.success('Usuário alterado com sucesso!', 'Usuario');
-          this.labelBotaoSalvarAlterar = 'Adicionar Usuário';
-        },
-          (error) => {
-            this.handleError(error);
-          });
-
-        this.formUsuario.reset();
-        this.desabilitarBotaoIncluir = true;
-      },
-        (error) => {
-          this.handleError(error);
-        });
     } else {
-      usuario = {
+      const usuario = {
         codigo: undefined,
         nome: this.formUsuario.value.nomeForm,
         login: this.formUsuario.value.emailForm,
@@ -116,15 +99,11 @@ export class ListaUsuariosComponent implements OnInit {
 
   deletarUsuario(usuario: Usuario) {
 
-    this.service.deletarUsuario(usuario).subscribe( codigo => {
-      this.service.listarUsuarios().subscribe( lista => {
-        this.listaUsuarios = lista;
-        this.toastr.success('Usuário excluido com sucesso!', 'Usuario');
-      });
-    },
-      (error) => {
-        this.handleError(error);
-    });
+    this.selectUsuario = usuario;
+    this.acaoExecutar = 'EXCLUIR';
+    this.messageTitulo = `Deseja realmente excluir o usuário ${usuario.nome}?`;
+    this.showModalConfirmacao = true;
+
   }
 
   alterarUsuario( usuario: Usuario ) {
@@ -172,8 +151,77 @@ export class ListaUsuariosComponent implements OnInit {
   }
 
   fazerLogout( ) {
+    this.acaoExecutar = 'SAIR';
+    this.messageTitulo = 'Deseja realmente sair?';
+    this.showModalConfirmacao = true;
+  }
 
-    localStorage.clear();
-    this.isLogin.emit(false);
+  calcel(event: boolean) {
+    this.showModalConfirmacao = event;
+  }
+
+  acaoNecessaria(acao: string) {
+
+    switch (acao) {
+      case 'SAIR' :
+        localStorage.clear();
+        this.isLogin.emit(false);
+        break;
+
+      case 'EXCLUIR' :
+
+        this.service.deletarUsuario(this.selectUsuario).subscribe( codigo => {
+            this.service.listarUsuarios().subscribe( lista => {
+              this.listaUsuarios = lista;
+              this.showModalConfirmacao = false;
+              this.toastr.success('Usuário excluido com sucesso!', 'Usuario');
+            });
+          },
+          (error) => {
+            this.handleError(error);
+          });
+
+        break;
+
+      case 'ALTERAR' :
+
+        this.aleracaoUsuario( );
+        break;
+
+      default: break;
+    }
+
+  }
+
+
+  aleracaoUsuario( ) {
+    this.alteraUsuario = false;
+
+    const usuario = {
+      codigo: this.codigoUsuario,
+      nome: this.formUsuario.value.nomeForm,
+      login: this.formUsuario.value.emailForm,
+      senha: this.formUsuario.value.senhaForm,
+      role: this.roleUsuario
+    };
+
+    this.service.salvarUsuario(usuario).subscribe( usuario => {
+        this.service.listarUsuarios().subscribe( lista => {
+            this.listaUsuarios = lista;
+            this.showModalConfirmacao = false;
+            this.toastr.success('Usuário alterado com sucesso!', 'Usuario');
+            this.labelBotaoSalvarAlterar = 'Adicionar Usuário';
+          },
+          (error) => {
+            this.handleError(error);
+          });
+
+        this.formUsuario.reset();
+        this.desabilitarBotaoIncluir = true;
+      },
+      (error) => {
+        this.handleError(error);
+      });
   }
 }
+
