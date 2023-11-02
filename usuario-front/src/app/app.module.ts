@@ -10,11 +10,14 @@ import {provideToastr, ToastrModule} from "ngx-toastr";
 import {NoopAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
 import {InputMaskModule} from "@ngneat/input-mask";
 import {JwtInterceptor} from "./auth/jwt.interceptor";
+import { LoginComponent } from './pages/login/login.component';
+import {ConfirmPopupModule} from "primeng/confirmpopup";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListaUsuariosComponent
+    ListaUsuariosComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +25,7 @@ import {JwtInterceptor} from "./auth/jwt.interceptor";
     HttpClientModule,
     FormsModule,
     InputMaskModule,
+    ConfirmPopupModule,
     ReactiveFormsModule,
     NoopAnimationsModule,
     ToastrModule.forRoot()

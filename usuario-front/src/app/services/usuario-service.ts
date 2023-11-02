@@ -3,7 +3,6 @@ import {environment} from "../../environment/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Usuario} from "../models/usuario";
-import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +12,7 @@ export class UsuarioService {
   apiUrl = `${environment.localHost}/usuario`
 
 
-  constructor( private http: HttpClient, private toastr: ToastrService ) {
+  constructor( private http: HttpClient ) {
   }
 
   listarUsuarios(): Observable<any> {
@@ -26,6 +25,10 @@ export class UsuarioService {
 
   deletarUsuario(usuario: Usuario): Observable<any> {
     return this.http.post(`${this.apiUrl}/deletar`, usuario);
+  }
+
+  loginUsuario( email: string ): Observable<any> {
+    return this.http.get(`${this.apiUrl}/login-usuario/${email}`);
   }
 
 }

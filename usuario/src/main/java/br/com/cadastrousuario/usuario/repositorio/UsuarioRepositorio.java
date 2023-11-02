@@ -13,4 +13,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
     UserDetails findByLogin(String login);
 
+    @Query(" SELECT user FROM Usuario user WHERE user.login = :email")
+    Usuario loginUsuario(@Param("email") String email );
+
 }

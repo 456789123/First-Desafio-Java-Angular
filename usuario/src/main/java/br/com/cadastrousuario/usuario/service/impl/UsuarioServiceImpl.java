@@ -54,5 +54,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         repositorio.delete(usuario);
     }
 
+    @Override
+    public UsuarioDTO loginUsuario(String email) {
+        Usuario user = repositorio.loginUsuario(email);
+        if( user != null ) {
+            return modelMapper.entidadeParaDto(user);
+        } else {
+            return null;
+        }
+
+    }
+
 
 }

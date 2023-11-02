@@ -25,13 +25,25 @@ public class AuthenticationRest {
     @Autowired
     private TokenComponent tokenComponent;
 
+    @Autowired
+    private UsuarioService service;
+
 
     @PostMapping(value = "/login", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity login(@RequestBody UsuarioDTO user ) {
-        var usuarioLogado = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getSenha());
-        var auth = this.authentication.authenticate(usuarioLogado);
-        var token = tokenComponent.geradorToken((Usuario) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseTDO(token));
+        if(service.loginUsuario(user.getLogin()) == null ) {
+            return ResponseEntity.ok( new LoginResponseTDO(null,"Usuário não identificado!", null));
+        }
+
+        try {
+            var usuarioLogado = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getSenha());
+            var auth = this.authentication.authenticate(usuarioLogado);
+            String token = tokenComponent.geradorToken((Usuario) auth.getPrincipal());
+
+            return ResponseEntity.ok(new LoginResponseTDO(token, "Login efetuado com sucesso!", user.getLogin()));
+        } catch ( Exception e ) {
+            return ResponseEntity.ok(new LoginResponseTDO(null, "Senha inválida!", null));
+        }
     }
 }

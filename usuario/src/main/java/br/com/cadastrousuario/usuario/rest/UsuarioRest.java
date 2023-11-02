@@ -35,6 +35,11 @@ public class UsuarioRest {
         return ResponseEntity.ok(service.buscarUsuario(codigoUsuario));
     }
 
+    @GetMapping("/login-usuario/{email}")
+    public ResponseEntity<UsuarioDTO> loginUsuario( @PathVariable("email") String email ) {
+        return ResponseEntity.ok(service.loginUsuario(email));
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/salvar", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UsuarioDTO> salvarUsuario(@RequestBody UsuarioDTO usuario ) {

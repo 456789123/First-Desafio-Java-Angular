@@ -10,6 +10,8 @@ public interface UsuarioService {
 
     UsuarioDTO buscarUsuario( long codigoUsuario );
 
+    UsuarioDTO loginUsuario( String email );
+
     UsuarioDTO salvarUsuario( UsuarioDTO usuario );
 
     void deletarUsuario( UsuarioDTO usuario );

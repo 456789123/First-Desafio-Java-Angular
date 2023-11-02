@@ -28,6 +28,10 @@ th {
   text-align: center;
 }
 
+a {
+  cursor: pointer;
+}
+
 
 .ui-alert {
   background-color: #F2DEDE;

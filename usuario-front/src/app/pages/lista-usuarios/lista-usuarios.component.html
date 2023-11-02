@@ -1,5 +1,6 @@
-<div class="jumbotron">
-  <h2>Lista de usuários</h2><br><br>
+<div class="jumbotron" xmlns="http://www.w3.org/1999/html">
+  <h2>Lista de usuários</h2><br>
+  <h4>Bem vindo {{usuarioLogado.nome}}</h4>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -13,17 +14,20 @@
     <tr *ngFor="let usuario of listaUsuarios">
       <td>{{usuario.nome}}</td>
       <td>{{usuario.login}}</td>
-      <td><button class="btn btn-primary"(click)="alterarUsuario( usuario )">Editar</button></td>
-      <td><button class="btn btn-danger" (click)="deletarUsuario(usuario)">Excluir</button></td>
+      <td><button class="btn btn-primary"(click)="alterarUsuario( usuario )" [disabled]="usuarioLogado.role !== 'ADMIN'">Editar</button></td>
+      <td><button class="btn btn-danger" (click)="deletarUsuario(usuario)" [disabled]="usuarioLogado.role !== 'ADMIN'">Excluir</button></td>
     </tr>
     </tbody>
   </table>
-  <hr/>
-  <div [formGroup]="formUsuario">
-    <input formControlName="nomeForm" class="form-control" type="text" name="nome"  placeholder="Nome"  (ngModelChange)="verificarFormulario()"/>
-    <input formControlName="emailForm" class="form-control" type="text" name="email" placeholder="Email" (ngModelChange)="verificarFormulario()" [inputMask]="emailInputMask"/>
-    <input formControlName="senhaForm" class="form-control" type="password" name="senha" placeholder="Senha" (ngModelChange)="verificarFormulario()"/>
+  <div *ngIf="usuarioLogado.role === 'ADMIN'">
+    <hr/>
+    <div [formGroup]="formUsuario">
+      <input formControlName="nomeForm" class="form-control" type="text" name="nome"  placeholder="Nome"  (ngModelChange)="verificarFormulario()"/>
+      <input formControlName="emailForm" class="form-control" type="text" name="email" placeholder="Email" (ngModelChange)="verificarFormulario()" [inputMask]="emailInputMask"/>
+      <input formControlName="senhaForm" class="form-control" type="password" name="senha" placeholder="Senha" (ngModelChange)="verificarFormulario()"/>
+      <br>
+    </div>
+    <button class="btn btn-success btn-block" (click)="adicionarUsuario( )" [disabled]="desabilitarBotaoIncluir">{{labelBotaoSalvarAlterar}}</button><br>
   </div>
-
-  <button class="btn btn-success btn-block" (click)="adicionarUsuario( )" [disabled]="desabilitarBotaoIncluir">{{labelBotaoSalvarAlterar}}</button>
+  <a (click)="fazerLogout()"><h4>Sair</h4></a>
 </div>

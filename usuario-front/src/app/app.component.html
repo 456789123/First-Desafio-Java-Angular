@@ -1,1 +1,2 @@
-<app-lista-usuarios></app-lista-usuarios>
+<app-login *ngIf="!login" (isLogin)="isLogin($event)" ></app-login>
+<app-lista-usuarios *ngIf="login" (isLogin)="isLogin($event)" ></app-lista-usuarios>

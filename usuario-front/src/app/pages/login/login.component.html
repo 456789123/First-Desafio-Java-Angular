@@ -1,0 +1,13 @@
+<div class="jumbotron">
+  <h2>Login</h2><br><br>
+
+  <div [formGroup]="formLogin">
+
+    <input formControlName="emailForm" class="form-control" type="text" name="email" placeholder="Email" (ngModelChange)="verificarFormulario()" [inputMask]="emailInputMask"/>
+    <input formControlName="senhaForm" class="form-control" type="password" name="senha" (ngModelChange)="verificarFormulario()" placeholder="Senha"/>
+
+  </div>
+
+  <button class="btn btn-success btn-block botao-login" (click)="validarUsuario()" [disabled]="desabilitarBotao">Login</button>
+
+</div>

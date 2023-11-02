@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {UsuarioService} from "../../services/usuario-service";
-import {Usuario} from "../../models/usuario";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ToastrService} from "ngx-toastr";
-import {createMask} from "@ngneat/input-mask";
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {UsuarioService} from '../../services/usuario-service';
+import {Usuario} from '../../models/usuario';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {createMask} from '@ngneat/input-mask';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -12,24 +12,25 @@ import {createMask} from "@ngneat/input-mask";
 })
 export class ListaUsuariosComponent implements OnInit {
 
+  @Output() isLogin = new EventEmitter<boolean>();
+
+  usuarioLogado: Usuario = new Usuario();
   listaUsuarios: Usuario[] = [];
-
   formUsuario: FormGroup;
-
   alteraUsuario: boolean = false;
   codigoUsuario: number | undefined;
-
   desabilitarBotaoIncluir: boolean = true;
-
   labelBotaoSalvarAlterar: string = '';
 
   emailInputMask = createMask({ alias: 'email' });
+
+  roleUsuario: string | undefined = '';
 
   constructor(
     private service: UsuarioService,
     private cdRef: ChangeDetectorRef,
     private formBuild: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
     ) {
     this.formUsuario = this.formBuild.group({
       nomeForm: ['', Validators.required],
@@ -44,6 +45,14 @@ export class ListaUsuariosComponent implements OnInit {
 
     this.service.listarUsuarios().subscribe( lista => {
       this.listaUsuarios = lista;
+
+      const email = localStorage.getItem('email');
+      if (email) {
+        this.service.loginUsuario(email).subscribe( usuario => {
+          this.usuarioLogado = usuario;
+        });
+      }
+
     },
       (error) => {
         this.handleError(error);
@@ -66,6 +75,7 @@ export class ListaUsuariosComponent implements OnInit {
         nome: this.formUsuario.value.nomeForm,
         login: this.formUsuario.value.emailForm,
         senha: this.formUsuario.value.senhaForm,
+        role: this.roleUsuario
       };
 
       this.service.salvarUsuario(usuario).subscribe( usuario => {
@@ -105,6 +115,7 @@ export class ListaUsuariosComponent implements OnInit {
   }
 
   deletarUsuario(usuario: Usuario) {
+
     this.service.deletarUsuario(usuario).subscribe( codigo => {
       this.service.listarUsuarios().subscribe( lista => {
         this.listaUsuarios = lista;
@@ -113,7 +124,7 @@ export class ListaUsuariosComponent implements OnInit {
     },
       (error) => {
         this.handleError(error);
-      });
+    });
   }
 
   alterarUsuario( usuario: Usuario ) {
@@ -128,6 +139,7 @@ export class ListaUsuariosComponent implements OnInit {
     this.formUsuario.get('emailForm')?.setValue(usuario.login);
     this.formUsuario.get('senhaForm')?.setValue(usuario.senha);
 
+    this.roleUsuario = usuario.role;
 
   }
 
@@ -148,11 +160,21 @@ export class ListaUsuariosComponent implements OnInit {
 
 
   private handleError(error: any) {
+
     if (error.status === 0) {
       this.toastr.error(`Ocorreu o seguinte erro: ${error.error}`, 'Erro!');
     } else {
       this.toastr.error(`Ocorreu o seguinte erro: ${error.status}`, 'Erro!');
     }
     this.toastr.error(`Aconteceu uma busca mal sucedida, tente mais tarde.`, 'Erro!');
+
+    localStorage.clear();
+    this.isLogin.emit(false);
+  }
+
+  fazerLogout( ) {
+
+    localStorage.clear();
+    this.isLogin.emit(false);
   }
 }
