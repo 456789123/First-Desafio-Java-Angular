@@ -33,3 +33,15 @@ a {
 }
 
 
+.overlay {
+  position: fixed; /* Mantém a div fixa na tela */
+  top: 0;
+  left: 0;
+  width: 100%; /* Cobrir toda a largura da tela */
+  height: 100%; /* Cobrir toda a altura da tela */
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo preto com transparência */
+  z-index: 999; /* Define a ordem de empilhamento para sobrepor outros elementos */
+  display: flex; /* Torna o conteúdo flexível para centralizá-lo verticalmente e horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+}
