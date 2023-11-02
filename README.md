@@ -3,11 +3,20 @@ Você está trabalhando em um projeto de uma aplicação web usando Java (Spring
 
 <hr>
 
-Segue o scrpit.sql para a tebela de usuários.
+Segue o scrpit.sql para a tebela de usuários.<br>
+Cada usuário tem a sua politica de de ações.
 
-Abaixo está a tela para a listagem e o formuláro para cadastro e alteração de usuários.
+"ADMIN" para excluir, alterar, adicionar e visualizar.<br>
+"USER" somente visualizar.<br>
+Todas as senhas estão encriptografadas.
 
-![img.png](img.png)
+Abaixo está a tela de login.
+
+![img_1.png](img_1.png)
+
+Após efetuar o login, será apresentado a seguinte tela para se trabalhar com a lista de usuários.
+
+![img_2.png](img_2.png)
 
 
 Tela para cadastro, listagem, alteração e exclusão de usuário.
