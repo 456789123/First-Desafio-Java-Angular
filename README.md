@@ -8,6 +8,7 @@ Cada usuário tem a sua politica de de ações.
 
 "ADMIN" para excluir, alterar, adicionar e visualizar.<br>
 "USER" somente visualizar.<br>
+Todas as requisições são validas com uma chave JWT.<br>
 Todas as senhas estão encriptografadas.
 
 Abaixo está a tela de login.
