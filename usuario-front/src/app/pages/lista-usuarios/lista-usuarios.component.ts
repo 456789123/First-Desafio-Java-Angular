@@ -137,7 +137,6 @@ export class ListaUsuariosComponent implements OnInit {
     this.codigoUsuario = usuario.codigo;
     this.formUsuario.get('nomeForm')?.setValue(usuario.nome);
     this.formUsuario.get('emailForm')?.setValue(usuario.login);
-    this.formUsuario.get('senhaForm')?.setValue(usuario.senha);
 
     this.roleUsuario = usuario.role;
 
