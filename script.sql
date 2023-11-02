@@ -41,19 +41,16 @@ SET          COD_USUARIO = NEXTVAL('co_seq_usuario');
 
 /*
 ################################################################################
-#                         inserindo os dados                                   #
+#                         inserindo o primeiro usuario                         #
+#                           senha criptografada                                #
+#                                  123456                                      #
 ################################################################################
 */
 
---                        TB_OPERADORA
+--                        TB_USUARIO
 
-INSERT INTO TB_USUARIO ( NOME, EMAIL, SENHA )
-VALUES ( 'Isaac Newton', 'isaac.newton@email.com.br', '12345678' );
-INSERT INTO TB_USUARIO ( NOME, EMAIL, SENHA )
-VALUES ( 'James Clerk Maxwell', 'james.maxell@email.com.br', '12345678' );
-INSERT INTO TB_USUARIO ( NOME, EMAIL, SENHA )
-VALUES ( 'Andre-Marie Ampere', 'andre.ampere@email.com.br', '12345678' );
-
+INSERT INTO TB_USUARIO ( NOME, EMAIL, SENHA, ROLE )
+VALUES ( 'Isaac Newton', 'isaac.newton@email.com.br', '$2a$10$rLXqXWU7JIYqyTIP6n1KyuhTCJoVu/dmy5t2PqgN7Hr9ftTPMf5Ae', 'ADMIN' );
 
 /*
 ################################################################################
