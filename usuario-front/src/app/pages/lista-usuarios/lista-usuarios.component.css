@@ -12,6 +12,10 @@
 .table {
   margin-top: 20px;
 }
+.table-container {
+  max-height: 190px;
+  overflow-y: auto;
+}
 .form-control {
   margin-bottom: 5px;
 }

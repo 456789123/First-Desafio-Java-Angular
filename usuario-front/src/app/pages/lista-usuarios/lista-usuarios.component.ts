@@ -31,6 +31,11 @@ export class ListaUsuariosComponent implements OnInit {
   acaoExecutar: string = '';
   selectUsuario: Usuario = new Usuario();
 
+  perfis = [
+    { role: 'ADMIN', nomePerfil: "Administrador" },
+    { role: 'USER',  nomePerfil: "Usuário" }
+  ];
+
   constructor(
     private service: UsuarioService,
     private cdRef: ChangeDetectorRef,
@@ -40,6 +45,7 @@ export class ListaUsuariosComponent implements OnInit {
     this.formUsuario = this.formBuild.group({
       nomeForm: ['', Validators.required],
       emailForm: ['', Validators.required],
+      perfilForm: ['', Validators.required],
       senhaForm: ['', Validators.required]
     });
   }
@@ -47,6 +53,7 @@ export class ListaUsuariosComponent implements OnInit {
   ngOnInit(): void {
 
     this.labelBotaoSalvarAlterar = 'Adicionar Usuário';
+    this.formUsuario.get('perfilForm')?.setValue('');
 
     this.service.listarUsuarios().subscribe( lista => {
       this.listaUsuarios = lista;
@@ -73,7 +80,7 @@ export class ListaUsuariosComponent implements OnInit {
     if( this.alteraUsuario ) {
 
       this.acaoExecutar = 'ALTERAR';
-      this.messageTitulo = `Deseja realmente alterar o usuário ${this.formUsuario.value.nomeForm}?`;
+      this.messageTitulo = `Deseja realmente alterar o usuário ${this.selectUsuario.nome}?`;
       this.showModalConfirmacao = true;
 
 
@@ -82,12 +89,14 @@ export class ListaUsuariosComponent implements OnInit {
         codigo: undefined,
         nome: this.formUsuario.value.nomeForm,
         login: this.formUsuario.value.emailForm,
+        role: this.formUsuario.value.perfilForm,
         senha: this.formUsuario.value.senhaForm,
       };
 
       this.service.salvarUsuario(usuario).subscribe( usuario => {
         this.listaUsuarios.push(usuario);
         this.formUsuario.reset();
+        this.formUsuario.get('perfilForm')?.setValue('');
         this.desabilitarBotaoIncluir = true;
         this.toastr.success('Usuário salvo com sucesso!', 'Usuario');
       },
@@ -108,16 +117,16 @@ export class ListaUsuariosComponent implements OnInit {
 
   alterarUsuario( usuario: Usuario ) {
 
+    this.selectUsuario = usuario;
+
     this.labelBotaoSalvarAlterar = 'Alterar Usuário';
 
     this.alteraUsuario = true;
-    this.desabilitarBotaoIncluir = false;
 
     this.codigoUsuario = usuario.codigo;
     this.formUsuario.get('nomeForm')?.setValue(usuario.nome);
     this.formUsuario.get('emailForm')?.setValue(usuario.login);
-
-    this.roleUsuario = usuario.role;
+    this.formUsuario.get('perfilForm')?.setValue(usuario.role);
 
   }
 
@@ -126,6 +135,7 @@ export class ListaUsuariosComponent implements OnInit {
    if( this.formUsuario.value.nomeForm !== '' &&
       this.formUsuario.value.emailForm !== '' &&
       this.formUsuario.value.senhaForm !== '' &&
+      this.formUsuario.value.perfilForm !== '' &&
       this.formUsuario.value.nomeForm.toString().length  >= 3 &&
       this.formUsuario.value.senhaForm.toString() !== null &&
       this.formUsuario.value.senhaForm.toString().length >= 6) {
@@ -174,6 +184,7 @@ export class ListaUsuariosComponent implements OnInit {
             this.service.listarUsuarios().subscribe( lista => {
               this.listaUsuarios = lista;
               this.showModalConfirmacao = false;
+              this.formUsuario.get('perfilForm')?.setValue('');
               this.toastr.success('Usuário excluido com sucesso!', 'Usuario');
             });
           },
@@ -202,7 +213,7 @@ export class ListaUsuariosComponent implements OnInit {
       nome: this.formUsuario.value.nomeForm,
       login: this.formUsuario.value.emailForm,
       senha: this.formUsuario.value.senhaForm,
-      role: this.roleUsuario
+      role: this.formUsuario.value.perfilForm
     };
 
     this.service.salvarUsuario(usuario).subscribe( usuario => {
@@ -217,6 +228,7 @@ export class ListaUsuariosComponent implements OnInit {
           });
 
         this.formUsuario.reset();
+        this.formUsuario.get('perfilForm')?.setValue('');
         this.desabilitarBotaoIncluir = true;
       },
       (error) => {
