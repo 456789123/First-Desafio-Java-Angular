@@ -17,7 +17,7 @@ Abaixo está a tela de login.
 
 Após efetuar o login, será apresentado a seguinte tela para se trabalhar com a lista de usuários.
 
-![img_2.png](img_2.png)
+![img.png](img.png)
 
 
 Tela para cadastro, listagem, alteração e exclusão de usuário.
