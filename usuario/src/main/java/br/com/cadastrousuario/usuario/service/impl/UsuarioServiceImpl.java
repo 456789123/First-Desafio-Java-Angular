@@ -23,7 +23,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioDTO> listarUsuarios() {
-        List<Usuario> lista = repositorio.findAll();
+        List<Usuario> lista = repositorio.listarUsuarios();
         lista.forEach( usuario -> usuario.setSenha(""));
         return modelMapper.listaEntidadeparaListaDTO(lista);
     }

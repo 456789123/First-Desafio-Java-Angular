@@ -6,7 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.List;
+
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
+
+    @Query(" SELECT user FROM Usuario user ORDER BY user.nome")
+    List<Usuario> listarUsuarios();
 
     @Query(" SELECT user FROM Usuario user WHERE user.codigo = :codigoUsuario")
     Usuario buscarUsuario(@Param("codigoUsuario") long codigoUsuario );
