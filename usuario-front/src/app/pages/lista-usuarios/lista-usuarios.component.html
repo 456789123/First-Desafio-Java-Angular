@@ -1,16 +1,14 @@
 <div class="jumbotron" xmlns="http://www.w3.org/1999/html">
   <h2>Lista de usuários</h2><br>
-  <h4>Bem vindo {{usuarioLogado.nome}}</h4>
+  <h4>Bem vindo {{usuarioLogado.nome}}</h4><br>
+  <div class="table-header">
+    <div class="table-cell">Nome</div>
+    <div class="table-cell">Email</div>
+    <div class="table-cell"></div>
+    <div class="table-cell"></div>
+  </div>
   <div class="table-container">
     <table class="table table-striped">
-      <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-      </thead>
       <tbody>
         <tr *ngFor="let usuario of listaUsuarios" >
           <td>{{usuario.nome}}</td>
@@ -27,7 +25,7 @@
       <input formControlName="nomeForm" class="form-control" type="text" name="nome"  placeholder="Nome"  (ngModelChange)="verificarFormulario()"/>
       <input formControlName="emailForm" class="form-control" type="text" name="email" placeholder="Email" (ngModelChange)="verificarFormulario()" [inputMask]="emailInputMask"/>
       <select class="form-control" formControlName="perfilForm" (ngModelChange)="verificarFormulario()">
-        <option value="">Selecione o perfil do usuário</option>
+        <option value="">Perfil do usuário</option>
         <option *ngFor="let perfil of perfis" [ngValue]="perfil.role">{{perfil.nomePerfil}}</option>
       </select>
       <input formControlName="senhaForm" class="form-control" type="password" name="senha" placeholder="Senha" (ngModelChange)="verificarFormulario()"/>
