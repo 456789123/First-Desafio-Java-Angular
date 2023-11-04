@@ -3,7 +3,8 @@ Você está trabalhando em um projeto de uma aplicação web usando Java (Spring
 
 <hr>
 
-Segue o scrpit.sql para a tebela de usuários.<br>
+Segue o scrpit.sql para a criação e a inserção do primeiro usuário com a senha encriptografada.
+<a>script.sql</a>
 Cada usuário tem a sua politica de de ações.
 
 "ADMIN" para excluir, alterar, adicionar e visualizar.<br>
