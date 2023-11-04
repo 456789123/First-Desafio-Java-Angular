@@ -3,9 +3,11 @@ Você está trabalhando em um projeto de uma aplicação web usando Java (Spring
 
 <hr>
 
-Segue o scrpit.sql para a criação e a inserção do primeiro usuário com a senha encriptografada.
-<a>script.sql</a>
-Cada usuário tem a sua politica de de ações.
+Segue o [script.sql](script.sql) para a criação e a inserção do primeiro usuário com a senha encriptografada.<br>
+Senha 123456.<br>
+Cada usuário tem a sua politica de de ações.<br>
+Caso queira colocar outro usuário e colocar outra senha pode usar essa main Java para colocar outra senha.
+[GerarSenha.java](usuario%2Fsrc%2Fmain%2Fjava%2Fbr%2Fcom%2Fcadastrousuario%2Fusuario%2FGerarSenha.java)
 
 "ADMIN" para excluir, alterar, adicionar e visualizar.<br>
 "USER" somente visualizar.<br>
